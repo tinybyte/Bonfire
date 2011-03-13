@@ -5,8 +5,8 @@ class MaxList {
     case List() => throw new IllegalArgumentException("Empty Args")
     case List(x) => x
     case x::rest =>
-      val maxRest = rest
+      val maxRest = maxList(rest)
       if(x > maxRest) x
-      else maxList(maxRest)
+      else maxRest
   }
 }
