@@ -1,0 +1,35 @@
+Global setup:
+
+ Download and install Git
+  git config --global user.name "TinyByte"
+  git config --global user.email evolye@gmail.com
+        
+
+Next steps:
+
+  mkdir Bonfire
+  cd Bonfire
+  git init
+  touch README
+  git add README
+  git commit -m "first commit"
+  git remote add origin git@github.com:tinybyte/Bonfire.git
+  git push -u origin master
+      
+
+Existing Git Repo?
+
+  cd existing_git_repo
+  git remote add origin git@github.com:tinybyte/Bonfire.git
+  git push -u origin master
+      
+
+Importing a Subversion Repo?
+
+  Click here
+      
+
+When you're done:
+
+  Continue
+
