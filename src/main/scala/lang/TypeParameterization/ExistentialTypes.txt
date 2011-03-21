@@ -29,3 +29,9 @@ the formal theory under the slogan: "Abstract [data] types have existential type
 The theory is a second-order typed lambda calculus similar to System F,
 but with existential instead of universal quantification.
 
+existential type  An existential type includes references to type variables
+that are unknown.  For example, Array[T] forSome { type T } is
+an existential type.  It is an array of T, where T is some completely
+unknown type. All that is assumed about T is that it exists at all. This
+assumption is weak, but it means at least that an Array[T] forSome
+{ type T } is indeed an array and not a banana.
