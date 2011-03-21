@@ -1,0 +1,31 @@
+Existential types
+
+Existential types are frequently used in connection with record types to represent modules
+and abstract data types, due to their ability to separate implementation from interface.
+For example, the type "T = ∃X { a: X; f: (X → int); }" describes a module interface that
+has a data member of type X and a function that takes a parameter of the same type X and
+returns an integer. This could be implemented in different ways; for example:
+
+    * intT = { a: int; f: (int → int); }
+    * floatT = { a: float; f: (float → int); }
+
+These types are both subtypes of the more general existential type T and correspond to concrete
+implementation types, so any value of one of these types is a value of type T.
+Given a value "t" of type "T", we know that "t.f(t.a)" is well-typed,
+regardless of what the abstract type X is. This gives flexibility for choosing types suited to
+a particular implementation while clients that use only values of the interface type—the
+existential type—are isolated from these choices.
+
+In general it's impossible for the typechecker to infer which existential type a given module
+belongs to. In the above example intT { a: int; f: (int → int); } could also have the type
+∃X { a: X; f: (int → int); }. The simplest solution is to annotate every module with its
+intended type, e.g.:
+
+    * intT = { a: int; f: (int → int); } as ∃X { a: X; f: (X → int); }
+
+Although abstract data types and modules had been implemented in programming languages for
+quite some time, it wasn't until 1988 that John C. Mitchell and Gordon Plotkin established
+the formal theory under the slogan: "Abstract [data] types have existential type".[5]
+The theory is a second-order typed lambda calculus similar to System F,
+but with existential instead of universal quantification.
+
