@@ -1,0 +1,39 @@
+    In Programming In Scala, Martin said very clearly that Queue is not a type it’s a type constructor,
+    Queue[Int] is a type, but is Queue[X] still a type?
+    trait SomeTrait[X,Queue[Y]]
+
+a type constructor that is applied to the right number of type arguments  is considered a "proper" type
+both type constructors and "proper" types are considered types in Scala, this is analogous to the following statement:
+both (value-level) functions and strings are values (in the sense that you can store them in memory or pass them around as arguments to methods), but in order to get the result of a function, you first need to apply it to its expected arguments
+
+a system that treats functions (which abstract over values) and values alike, is called "higher-order", which means functions can take functions as their arguments (since functions are considered values)
+
+the reason we still distinguish proper types from type constructors is that only proper types can have values
+i.e., there are no values of type List (since it's a type constructor), but if you apply the type constructor to enough arguments you get a proper type, List[Int], for example, which does have values
+
+
+    class SomeClass extends SomeTrait[Int,Queue[Int]] // error: scala.collection.immutable.Queue[Int] takes no type parameters, expected: oneclass SomeClass extends SomeTrait[Int,Queue]// compiles, but I am passing a type constructor Queue to type Queue[Y], strange!
+
+in your code snippet above, the meaning of the type parameter definition Queue[Y] is like the meaning of 'def queue(y: String)' -- it means Queue has a type parameter called `Y`, so Queue is a type constructor; in this context, Queue[Y] is not a well-formed type, since the type argument for the parameter Y is not known yet -- expecting this type application to result in a proper type is like expecting a result from queue(y), where 'y' is simply the name of queue's first argument
+
+
+
+
+    2.      Some of the mathematical notions confuses me, like  K ::= ! | K " K , I  ,  I think I should take this serious now, because they’re everywhere if
+    I wanna truly understand something, so would you please give some hints where does these symbols come from, any books  on this?
+
+this is explained in more detail in my thesis or in my paper
+Safe Type-level Abstraction in Scala
+
+I don't think you need to understand the kind system in the level of detail that's explained in that paper to successfully program in Scala, though -- until you start designing your own collection library or something, you should be just fine with the basic intuitions I explained above
+
+for the fundamental theory behind this, I highly recommend Pierce's Types and Programming Languages
+►
+
+
+    3.       Is type function and type constructor the same thing?
+
+roughly, yes (and as I explained above they're both types in Scala)
+
+hth
+adriaan

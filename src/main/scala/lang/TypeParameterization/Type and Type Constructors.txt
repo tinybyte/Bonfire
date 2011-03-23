@@ -1,0 +1,32 @@
+1.basically when we say type functions and type constructors, we mean the same thing.
+2.Scala traits both type and type constructors as type, but only when you pass a proper type
+to type constructors, then the type constructors become a proper type.
+
+That's say, List[Int] is a proper type, List[X] is not, because X is unknown, List is not, because it
+expects a proper type.
+
+3. Type constructors
+
+---------------------------------------------------------------------------------------------------------
+scala> trait SomeTrait[Box[X]]
+scala> class SomeClass extends SomeTrait[List[Int]]
+<console>:6: error: List[Int] takes no type parameters, expected: one
+       class SomeClass extends SomeTrait[List[Int]]
+                                         ^
+reason: the kind of Box[X] is * -> *, but we pass a kind of *
+---------------------------------------------------------------------------------------------------------
+scala> trait SomeTrait[Box[Int]]
+defined trait SomeTrait
+
+scala> class SomeClass extends SomeTrait[List[Int]]
+<console>:6: error: List[Int] takes no type parameters, expected: one
+       class SomeClass extends SomeTrait[List[Int]]
+                                         ^
+reason: the kind of Box[Int] is Int -> *, which is also * -> *, that means SomeTrait expects a typte constructor
+however, I passed a List[Int], which is a kind of *
+
+---------------------------------------------------------------------------------------------------------
+
+---------------------------------------------------------------------------------------------------------
+---------------------------------------------------------------------------------------------------------
+

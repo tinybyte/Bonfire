@@ -1,0 +1,40 @@
+All instances in scala have a type. So an integer will have type Int, and a color will have type Color, and a list of addressess will have the type List[Address] and so on.
+
+However, not every type can be instantiated. You can have a List[Int], but you can't make an instance of List. The List type is waiting for another type to give you a type you can instantiate. You can think of List as a type-level function that accepts one argument and returns a type you can instantiate. Just as functions have signatures, type-level functions have type-level signatures. For obscure historical reasons, we call these 'kinds'.
+
+Let's say that things we can instantiate have the kind * (star), and that :k is on type names like : is on variables in functions. We can write "the kind of Int is *" and "the kind of List[Int] is *" as:
+
+Int :k = *
+List[Int] :k = *
+
+So how will we describe the kind or List? Well, it's a kind that takes one kind that can be instantiated (*) and maps it to (->) another kind that can be instantiated (*). Option also is waiting for one other instantiable type. So, they have kinds:
+
+List :k * -> *
+Option :k * -> *
+
+The Map type is expecting two types, both of which are instantiable. So does Either.
+
+Map :k * -> * -> *
+Either :k * -> * -> *
+
+What if we needed a type that abstracted over Map and Either for some weird reason I can't invent right now? Well, we can use a trait/class with a nested type declaration to capture this.
+
+trait Apply1of2[X[_, _], A] { type a1of2[B] = X[A, B] }
+
+This lets us say things like Apply1of2[Map, String] which gives us #a1of2[B] = Map[String, B], and Apply1of2[Either, Int] which gives us #a1of2[B] = Either[String, B]. The kind of Apply1of2 can be read off from the type signature:
+
+Apply1of2 :k (* -> * -> *) -> * -> *
+
+And, the kind of a1of2 is:
+
+a1of2 :k * -> *
+
+However, by combining them, because a1of2 has captured X and A from outside, with a little abuse of notation we can get write this out in full as:
+
+                   /----Apply1of2---\  # /---a1of2---\
+Apply1of2#a1of2 :k (* -> * -> *) -> * -> * -> *
+                   \---- X ----/   \A/  \B/  \X[A, B]/
+
+Hope that helps.
+--
+Matthew Pocock

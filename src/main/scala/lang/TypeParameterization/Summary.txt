@@ -1,0 +1,14 @@
+Valuable Links about this topic:
+http://stackoverflow.com/questions/2733780/inheritance-and-type-parameters-of-traversable
+
+Types classifies values, kinds classifies types.
+
+The Kind of a type is like the type of the value
+val i:Int = 1 // the type of i is Int
+the kind of Int is * // pronouced as "type"
+so, we can say the kind of a type is *, but the kind of a type constructor like A[_] is * -> *
+for example: the kind of List is * -> *, because you give it a * and it returns a *
+
+so we denote the types of values using Int, List[Int]
+denote kinds of type using notions like * , * -> * , * -> * -> *
+

@@ -10,7 +10,7 @@ package usage
 
 class Curry {
   def process[A](filter: A => Boolean)(list: List[A]): List[A] = {
-    lazy val recurse = process(filter) _ //the underscore just tells the compiler to treat the suffixed value as a functional, rather than a method to be evaluated.
+    lazy val recurse = process[A](filter) _ //the underscore just tells the compiler to treat the suffixed value as a functional, rather than a method to be evaluated.
 
     list match {
       case head :: tail => if (filter(head)) {
