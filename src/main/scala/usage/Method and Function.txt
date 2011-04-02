@@ -1,0 +1,18 @@
+A function is an object, it cannot be overridden as that makes no sense. Methods can be overridden. However, as I say above, the overriding is not polymorphic in the method's parameter types. So for example:
+
+class A {
+  def foo(a : Any) = println("A: " + a)
+}
+
+class B extends A {
+  override def foo(s : String) = println("B " + s) //will not compile!
+}
+
+The two methods in my example above are two separate methods: dynamic dispatch works only on the method target (i.e. the object on which it is being called).
+
+In the above, example, if you remove the override declaration, the code will compile. If you run the following:
+
+(new B).foo(1)   //prints A 1
+(new B).foo("s") //prints B s
+
+This is because, although both methods are called foo, they are completely different methods (i.e. I have overloaded foo, not overridden it). It's best understood as being that a method's arguments' (incl their types) form part of that method's unique name. One method overrides another only if they have exactly the same name.
