@@ -1,0 +1,4 @@
+Why does this compiles?
+
+scala> ({ () => println("bar") })()
+bar
